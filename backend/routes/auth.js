@@ -9,7 +9,7 @@ const JWT_SECRET = "we@reperfect!"
 
 //Route 1: Create User using POST "api/auth/create-user" NO LOGIN REQUIRED
 router.post('/create-user',[
-    body('name','Enter a valid name').isLength({min:3}),
+    body('username','Enter a valid username').isLength({min:3}),
     body('email','Enter valid Email').isEmail(),
     body('password','Password must have atleast 8 characters').isLength({min:8})
 ],async (req,res)=>{
@@ -21,14 +21,16 @@ router.post('/create-user',[
     try{
     // const user = User(req.body);
     let user = await User.findOne({email: req.body.email});
+    let success=false ;
     if(user){
-        return res.status(400).json({ errors: "User with this Email already exist , Try another Email"});
+        success=false;
+        return res.status(400).json({success, errors: "User with this Email already exist , Try another Email"});
     }
     const salt = await bcrypt.genSalt(10);
     const secPass = await bcrypt.hash(req.body.password,salt); 
 
     user = await User.create({
-        name: req.body.name,
+        username: req.body.username,
         email: req.body.email,
         password: secPass,
     })
@@ -38,11 +40,13 @@ router.post('/create-user',[
         }
     }
     const authToken = jwt.sign(data,JWT_SECRET);
+    success=true;
     // console.log(authToken);
-    res.json({authToken}) //Using ES6 here, Can also write res.json(authtoken:authtoken)
+    res.json({success,authToken}) //Using ES6 here, Can also write res.json(authtoken:authtoken)
     }catch(error){
+        
         console.error(error.message)
-        res.status(500).send("Internal Server Error : Something Went Wromg!!")
+        res.status(500).send("Internal Server Error : Something Went Wrong!!")
     }
 })
 

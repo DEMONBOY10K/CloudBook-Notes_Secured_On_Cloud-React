@@ -23,18 +23,21 @@ function App() {
     },2500)
   }
   useEffect(() => {
-    showAlert("This is an alert","success")
-  }, [])
+    if (alert && alert.msg && alert.type) {
+      showAlert(alert.msg, alert.type);
+    }
+  }, [alert]);
+  
   
   return (
     <>
     <NoteState>
       <Router>
-        <Navbar />
+        <Navbar showAlert={showAlert}/>
         <Alert alert={alert}/>
           <Routes>
             <Route exact path="/" element={
-              <Home/>
+              <Home showAlert={showAlert}/>
             }>
             </Route>
             <Route exact path="/about" element={
@@ -46,7 +49,7 @@ function App() {
             }>
             </Route>
             <Route exact path="/signup" element={
-              <SignUp/>
+              <SignUp showAlert={showAlert}/>
             }>
             </Route>
           </Routes>

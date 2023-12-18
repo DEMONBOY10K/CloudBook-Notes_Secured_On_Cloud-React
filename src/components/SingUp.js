@@ -1,8 +1,47 @@
-import React from 'react';
+import React ,{useState} from 'react';
+import {useNavigate} from 'react-router-dom'
 import styles from './css/SignUp.module.css'; // Import the CSS module
 // import { Link } from 'react-router-dom';
 
-const SignUp = () => {
+const SignUp = (props) => {
+    let navigate = useNavigate();
+    const [creds, setCreds] = useState({username :"",email:"",password:""});
+    const handleSubmit = async (e)=>{
+        e.preventDefault();
+        const host = "http://localhost:5000"
+        const url = `${host}/api/auth/create-user`
+        const response = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username : creds.username ,email:creds.email, password:creds.password}),
+        });
+        console.log(response);
+        if (response.ok) {
+            const json = await response.json();
+            console.log(json);
+            if(json.success){
+                //Save auth Token & Redirect
+                localStorage.setItem('token',json.authToken);
+                navigate("/");
+                props.showAlert("SignUp Successfull","success");
+            }
+            else{
+                props.showAlert("SignUp Failed","danger");
+            }
+        } else {
+            const json = await response.json();
+            console.log(json);
+            props.showAlert(json.error,"danger");
+        }
+        
+    }
+
+    const handleTextChange = (e)=>{
+        setCreds({...creds,[e.target.name]:e.target.value})
+        // console.log(creds)
+    }
     return (
         <div className={`container ${styles.containerSignUp} my-3`}> {/* Combine Bootstrap and CSS module classes */}
             <div className={`signup-box ${styles['signup-box']}`}> {/* Combine Bootstrap and CSS module classes */}
@@ -14,19 +53,19 @@ const SignUp = () => {
                         </p>
                         <form className={`formSignUp ${styles.formSignUp}`} action="#"> {/* Combine Bootstrap and CSS module classes */}
                             <div>
-                                <label htmlFor="username"> Name</label>
-                                <input type="text" name="username" className={`input-text ${styles['input-username']}`} /> {/* Combine Bootstrap and CSS module classes */}
+                                <label htmlFor="username"> UserName</label>
+                                <input type="text" name="username" id="username" className={`input-text ${styles['input-username']}`} onChange={handleTextChange} /> {/* Combine Bootstrap and CSS module classes */}
                             </div>
                             <div>
                                 <label htmlFor="email"> E-Mail</label>
-                                <input type="email" name="email" className={`input-email ${styles['input-email']}`} /> {/* Combine Bootstrap and CSS module classes */}
+                                <input type="email" name="email" id="email" className={`input-email ${styles['input-email']}`} onChange={handleTextChange} /> {/* Combine Bootstrap and CSS module classes */}
                             </div>
                             <div>
                                 <label htmlFor="password"> Password</label>
-                                <input type="password" name="password" className={`input-password ${styles['input-password']}`} /> {/* Combine Bootstrap and CSS module classes */}
+                                <input type="password" name="password" id="password" className={`input-password ${styles['input-password']}`} onChange={handleTextChange} /> {/* Combine Bootstrap and CSS module classes */}
                             </div>
                             <div>
-                                <input type="button" value="Create account" className={`btn ${styles.btn}`} /> {/* Combine Bootstrap and CSS module classes */}
+                                <input type="button" value="Create account" className={`btn ${styles.btn}`} onClick={handleSubmit}/> {/* Combine Bootstrap and CSS module classes */}
                             </div>
                         </form>
                         <div className={`alternate-text ${styles['alternate-text']}`}>Or SignUp with</div> {/* Combine Bootstrap and CSS module classes */}
