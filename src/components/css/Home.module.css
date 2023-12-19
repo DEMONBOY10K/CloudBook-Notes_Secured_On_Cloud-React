@@ -1,0 +1,22 @@
+.containerHome{
+    min-height: 100vh;
+  position: relative;
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  padding: 1rem;
+}
+
+.containerNotes  {
+    position: relative; /* Change to relative positioning */
+  width: 100%;
+  max-width: 1140px;
+  max-height: 1500px;
+  padding: 1rem 5rem;
+  margin: 0rem auto 3rem auto;
+  background: rgba(255, 255, 255, 0.375);
+  box-shadow: 0 1rem 2rem 0 rgba(0, 0, 0, 0.15);
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  z-index: 1; /* Add z-index to make sure it's above the canvas */
+  }
+  

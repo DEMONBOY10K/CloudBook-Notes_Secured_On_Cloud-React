@@ -3,6 +3,7 @@ import {useNavigate} from 'react-router-dom'
 import NoteContext from '../context/notes/NoteContext'
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
+import styles from './css/Home.module.css';
 
 const Notes = () => {
     let navigate = useNavigate();
@@ -33,13 +34,13 @@ const Notes = () => {
     }
     const ref=useRef(null)
     return (
-        <>
+        <div className= {`container ${styles.containerNotes}`}>
             <AddNote />
 
             {/* Modal For Update NOTE */}
             <button type="button" className="btn d-none btn-primary" ref={ref} data-bs-toggle="modal" data-bs-target="#exampleModal" >
             </button>
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" style={{backgroundColor: "rgba(92, 91, 165, 0.5)"}} id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="false">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
@@ -79,7 +80,7 @@ const Notes = () => {
                     return <NoteItem key={note._id} updateNote={updateNote} note={note} />;
                 })}
             </div>
-        </>
+        </div>
     )
 }
 

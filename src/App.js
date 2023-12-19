@@ -10,9 +10,6 @@ import Login from './components/Login';
 import SignUp from './components/SingUp';
 
 function App() {
-  // const a={
-  //   msg: "message", type : "success"
-  // }
   const [alert, setAlert] = useState();
   const showAlert =(message,type)=>{
     setAlert({
@@ -26,7 +23,8 @@ function App() {
     if (alert && alert.msg && alert.type) {
       showAlert(alert.msg, alert.type);
     }
-  }, [alert]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   
   
   return (

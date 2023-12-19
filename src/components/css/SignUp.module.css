@@ -46,7 +46,7 @@ p {
   flex-direction: column;
   justify-content: center;
   flex: 1 1 100%;
-  padding: 4em;
+  padding: 1.5em 4em;
 }
 
 .signup-box-quotebox {
@@ -72,7 +72,7 @@ p {
 .signup-box-signup {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
+  align-content: flex-start;
   flex-grow: 1;
 }
 

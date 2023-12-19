@@ -45,7 +45,7 @@ p {
   flex-direction: column;
   justify-content: center;
   flex: 1 1 100%;
-  padding: 4em;
+  padding: 1.5em 4em;
 }
 
 .login-box-quotebox {
@@ -69,7 +69,7 @@ p {
 .login-box-login {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
+  align-content: flex-start;
   flex-grow: 1;
 }
 .login-box-login > * {
